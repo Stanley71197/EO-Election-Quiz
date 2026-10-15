@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Election Officers – Nominations Quiz</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f5f6f8;--card:#fff;--tx:#1d2330;--mu:#5d6676;--bd:#d9dde5;--pr:#1f4e9c;--prt:#fff;--ok:#1e9e5a;--okb:#e3f5ec;--bad:#c9372c;--badb:#fdeceb;--gr:#c9ced8;--bl:#2d6df6;--wa:#8a6300;--wab:#fff4d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#12151c;--card:#1b202b;--tx:#e8ebf2;--mu:#9aa3b5;--bd:#2c3341;--pr:#6f9bf0;--prt:#0f1420;--ok:#3ccf86;--okb:#12301f;--bad:#ff7a6e;--badb:#3a1916;--gr:#4a5263;--bl:#5b8cff;--wa:#f0c85a;--wab:#3a300f}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#12151c;--card:#1b202b;--tx:#e8ebf2;--mu:#9aa3b5;--bd:#2c3341;--pr:#6f9bf0;--prt:#0f1420;--ok:#3ccf86;--okb:#12301f;--bad:#ff7a6e;--badb:#3a1916;--gr:#4a5263;--bl:#5b8cff;--wa:#f0c85a;--wab:#3a300f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:.2em 0}h2{font-size:1.2rem;margin:.4em 0}h3{font-size:1rem;margin:.3em 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin:12px 0}
+.mu{color:var(--mu);font-size:.9rem}
+button,.btn{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:10px 16px;cursor:pointer}
+button.p{background:var(--pr);color:var(--prt);border-color:var(--pr);font-weight:600}
+button.d{background:var(--bad);color:#fff;border-color:var(--bad)}button:disabled{opacity:.5}
+.big{display:block;width:100%;padding:18px;font-size:1.1rem;margin:10px 0;text-align:left}
+label{display:block;font-weight:600;margin:12px 0 4px}input,select{font:inherit;width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.sp{flex:1}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--bd);padding:8px 16px;display:flex;gap:8px;align-items:center;justify-content:space-between}
+.timer{font-weight:700;font-variant-numeric:tabular-nums;font-size:1.1rem}.timer.low{color:var(--bad)}
+.opt{display:flex;gap:10px;width:100%;text-align:left;margin:8px 0;padding:12px}.opt.sel{border-color:var(--pr);background:var(--okb);outline:2px solid var(--pr)}
+.opt b{min-width:1.4em}
+.layout{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:820px){.layout{grid-template-columns:1fr 280px}.pt{display:none}}
+.pal{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.pal button{padding:8px 0;font-weight:600;background:var(--gr);color:#10131a;border:2px solid transparent}
+.pal button.a{background:var(--ok);color:#fff}.pal button.b{background:var(--bl);color:#fff}.pal button.cur{border-color:var(--tx)}
+.lg{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;margin:8px 0}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.side{display:none}@media(min-width:820px){.side{display:block}}
+.bm{border-color:var(--bl);color:var(--bl)}.bm.on{background:var(--bl);color:#fff}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}.modal .card{max-width:420px;width:100%}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}.stat{border:1px solid var(--bd);border-radius:10px;padding:10px;text-align:center}.stat b{display:block;font-size:1.5rem}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.78rem;font-weight:700}
+.ok{background:var(--okb);color:var(--ok)}.bad{background:var(--badb);color:var(--bad)}.na{background:var(--wab);color:var(--wa)}
+.qc{border-left:5px solid var(--gr)}.qc.ok{border-left-color:var(--ok);background:var(--card)}.qc.bad{border-left-color:var(--bad);background:var(--card)}.qc.na{border-left-color:var(--wa);background:var(--card)}
+.ex{background:var(--bg);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:.92rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:8px;border-bottom:1px solid var(--bd);text-align:left}th{color:var(--mu)}td.n,th.n{text-align:center}
+.tw{overflow-x:auto}.err{color:var(--bad);font-weight:600;margin:8px 0}.li{display:block;width:100%;text-align:left;margin:6px 0;padding:14px}
+</style></head><body>
+<div id="app"></div>
+<script>
+const R=(a,s,p)=>`${a} – ${s}, p. ${p}`;
+const A4a=R("Annexure 4","Part I: Material for Nomination Process (Statutory Forms)",123),A4b=R("Annexure 4","Part I: Non-Statutory Forms (Nomination Process)",123),A4c=R("Annexure 4","Part I: Non-Statutory Forms (after publication of list)",124),A4d=R("Annexure 4","Part I: Postal Ballot Forms / Covers",124);
+const A5=p=>R("Annexure 5","Nomination Paper (Form-I)",p),A11=(s,p)=>R("Annexure 11",s,p),A12=(s,p)=>R("Annexure 12",s,p);
+// [question, correct, wrong1, wrong2, wrong3, explanation, reference]
+const BANK=[
+["How many copies of Form I (Nomination Paper) are required per ward at Election Officer level?","50 per ward","10 per ward","20 per ward","100 per ward","Form I, Form IA and Form II are each listed at 50 per ward.",A4a],
+["The requirement of Form IV (List of Validly Nominated Candidates) per ward is:","5 per ward","10 per ward","15 per ward","20 per ward","Form IV is listed at 5 per ward; Form III is 10, Form VII is 15.",A4a],
+["How many copies of Form VII (List of Contesting Candidates) are required per ward at EO level?","15 per ward","5 per ward","10 per ward","20 per ward","Form VII is listed at 15 per ward in the nomination-process materials.",A4a],
+["How many Checklists for Nomination Paper should be kept per ward?","100 per ward","50 per ward","150 per ward","10 per ward","The Checklist is issued by the EO to the candidate wherever defects or missing documents are found; requirement is 100 per ward.",A4b],
+["The requirement of the Register of Deposits is:","2 per ward","1 per ward","5 per ward","10 per ward","Register of Deposits is a non-statutory item at 2 per ward.",A4b],
+["The Model Notice of Election is to be supplied in which languages and quantity?","Telugu & English, 10 per ward","Telugu only, 50 per ward","English only, 10 per ward","Telugu & English, 50 per ward","The model notice format is given by the SEC in Telugu and English; 10 per ward.",A4a],
+["Which of the following is a NON-statutory form for the nomination process?","Declaration on disqualifications filed with the nomination paper","Form IA – Declaration as to Choice of Symbols","Form II – Declaration for SC/ST/BC candidates","Form III – List of Nominations Received","Disqualification, criminal antecedents and expenditure declarations, the deposit notification, Register of Deposits and the Checklist are non-statutory.",A4b],
+["The Format for Vehicle Permit is required in what quantity?","250 per ULB","250 per ward","50 per ward","100 per ULB","It is listed among non-statutory forms supplied after publication of the list of contesting candidates, at 250 per ULB.",A4c],
+["Which of these is supplied only AFTER publication of the list of contesting candidates?","Model Code of Conduct (50 per ward)","Form I – Nomination Paper","Form IA – Choice of Symbols","Checklist for Nomination Paper","Model Code of Conduct, SEC orders on expenditure accounts/ceiling and specimen signature formats fall in this later category.",A4c],
+["Format for Specimen Signature of Contesting Candidates and Election Agents is required at:","10 per ward","50 per ward","20 per ward","250 per ULB","Listed at 10 per ward after publication of the list of contesting candidates.",A4c],
+["Form X-B (Application for Election Duty Certificate) is required in what quantity?","5 per ward","150 per ward","50 per ward","10 per ward","Form X-A and XI are 150 per ward; X-B and X-C are 5 per ward.",A4d],
+["Cover PB-5, used to despatch the postal ballot paper, is of which colour and size?","White, Big","White, Small","Brown, Medium","White, Medium","PB-5 is a white big cover holding ballot, instructions, intimation letter and the two smaller envelopes.",A4d],
+["ID Cards for Polling Agents are required in what quantity?","30 per ward","20 per ward","10 per PS","100 per ULB","Contesting candidates and election agents get 20 per ward; polling agents 30 per ward.",A4d],
+["Form I (Nomination Paper) carries which rule reference?","Rule 8(1)","Rule 8(8)","Rule 8(9)","Rule 11","Form I is headed [See Rule 8(1)].",A5(130)],
+["Which of the following is NOT a particular to be filled by the candidate in Form I?","Educational qualification","Father's or Husband's name","Community: OC/SC/ST/BC","Number of the candidate in the electoral roll","Form I asks for name, roll number, father's/husband's name, age, sex, occupation & address, community and proposer details; educational qualification is in a separate declaration.",A5(130)],
+["The 'Serial No. of the Nomination Paper' on Form I is filled by:","The Election Officer or authorised person","The candidate","The proposer","The Returning Officer's clerk only after scrutiny","It sits in the portion 'To be filled by the Election Officer'.",A5(130)],
+["For wards reserved for SC/ST/BC, the Note in Form I requires enclosing the certificate prescribed in:","Rule 8(8)","Rule 8(1)","Rule 12","Rule 11","The Note refers to the certificate prescribed in Rule 8(8).",A5(131)],
+["The Election Officer's decision (Accepted / Rejected) on a nomination paper is made after examining it under:","Rule 12 of the A.P. Municipalities (Conduct of Election of Chairperson and Ward members) Rules, 2026","Rule 8(1)","Rule 11","Rule 8(10)","The decision block states the paper was examined in accordance with Rule 12.",A5(131)],
+["The receipt for the nomination paper, handed to the person presenting it, also informs them of:","The time, date and place of scrutiny","The symbol allotted","The security deposit amount","The last date for withdrawal","The receipt says all nomination papers will be taken up for scrutiny at the stated hour, date and place.",A5(131)],
+["Form IA (Declaration as to Choice of Symbols) is prescribed under:","Rule 8(9)","Rule 8(8)","Rule 8(1)","Rule 12","Form IA is headed [See Rule 8(9)].",R("Annexure 6","Form IA",132)],
+["In Form IA, a candidate of a registered party without reserved symbol (or an independent) indicates how many symbols in order of preference?","Three","One","Two","Five","The form provides for choices 1, 2 and 3.",R("Annexure 6","Form IA, clause (ii)",132)],
+["Form IA clause (i) applies to a candidate set up by:","A recognised National/State party or a registered party with a reserved symbol","A registered party without a reserved symbol","An independent candidate only","Any registered party","Clause (ii) covers unreserved-symbol parties and independents.",R("Annexure 6","Form IA, clause (i)",132)],
+["The Form II declaration by an SC/ST/BC candidate is affirmed before an officer of the Revenue Department not below the rank of:","Deputy Tahsildar","Tahsildar","Revenue Divisional Officer","Village Revenue Officer","Form II requires the signature of a Revenue Department officer not below Deputy Tahsildar.",R("Annexure 7","Form II",133)],
+["In Form II, the candidate declares membership of a Tribe/Caste/Backward Class in relation to which area?","A district or area in Andhra Pradesh","Any state in India","The ward only","The Municipality's revenue division only","The declaration refers to the Tribe/Caste/Class in Andhra Pradesh in relation to a District or area in the State.",R("Annexure 7","Form II",133)],
+["Form III (List of Nominations Received) is prescribed under:","Rule 11","Rule 8(1)","Rule 12","Rule 8(8)","Form III is headed [See Rule 11].",R("Annexure 8","Form III",134)],
+["Column 7 of Form III (community of candidate) is filled only when:","The office is reserved for STs/SCs/BCs","The candidate is an independent","The office is a Chairperson post","The proposer is from the same community","Otherwise the column is struck off, per the Note.",R("Annexure 8","Form III, Note",134)],
+["How many columns does Form III have?","9","7","8","10","Columns are numbered (1) to (9).",R("Annexure 8","Form III",134)],
+["The candidate's expenditure declaration acknowledges receipt of SEC Order No.:","175/SEC-F1/2026 dated 18.09.2026","191/SEC-F2/2026 dated 18.09.2026","193/SEC-F2/2026 dated 18.09.2026","197/SEC-F2/2026 dated 18.09.2026","The declaration cites Order No. 175/SEC-F1/2026 on maintenance of accounts.",R("Annexure 9","Declaration on Election Expenditure",135)],
+["Besides the SEC order on accounts, the candidate also acknowledges receiving the Commission's:","Notification prescribing the maximum limit of expenditure","Model Code of Conduct","Notification on security deposit refund","List of polling stations","The declaration mentions the notification prescribing the maximum expenditure limit.",R("Annexure 9","Declaration on Election Expenditure",135)],
+["The expenditure declaration is signed by the candidate before:","The Election Officer","A Gazetted Officer","A Notary","Two witnesses","It ends 'The above declaration is signed before me – Election Officer'.",R("Annexure 9","Declaration on Election Expenditure",135)],
+["In Annexure 10, the candidate declares he/she is not disqualified under:","The Andhra Pradesh Municipalities Act, 1965","The Representation of the People Act, 1951","The Constitution of India, Art. 243ZA","The A.P. Panchayat Raj Act","The declaration refers to disqualification under the A.P. Municipalities Act 1965.",R("Annexure 10","Declaration regarding Disqualification",136)],
+["The non-disqualification declaration is made to the best of the candidate's:","Knowledge and belief","Ability and judgment","Record and certificate","Understanding and consent","The wording is 'to the best of my knowledge and belief'.",R("Annexure 10","Declaration regarding Disqualification",136)],
+["SEC Order No. 191/SEC-F2/2026 prescribes the format of:","Declaration on criminal antecedents, assets, liabilities and educational qualifications","Checklist on nominations","Declaration on election expenditure","Nomination paper","The order's subject is disclosure of these details along with the nomination paper.",A11("SEC Order",137)],
+["The declaration on criminal antecedents etc. is required under which sub-rule of Rule 8?","Sub-rule (10)","Sub-rule (1)","Sub-rule (8)","Sub-rule (9)","Sub-rule (10) of Rule 8 stipulates this declaration.",A11("SEC Order, preamble",137)],
+["The self-declaration must be attested by how many witnesses?","Two","One","Three","None; it is on oath only","Para 1 requires attestation by two witnesses.",A11("SEC Order, para 1",137)],
+["If a candidate fails to file the declaration or files incomplete information, the nomination is:","Liable for rejection by the Election Officer","Accepted with a fine","Kept pending until the result","Automatically valid","Para 2 says the nomination becomes liable for rejection.",A11("SEC Order, para 2",137)],
+["If there is no information for a column in the declaration, the candidate should write:","'Nil' or 'Not applicable'","Leave it blank","Strike it off","Write 'Not known'","No column may be left blank; Nil / Not applicable must be entered.",A11("SEC Order, para 2",137)],
+["When the declaration is filed complete, can the EO reject the nomination solely because the information is false or defective?","No","Yes, always","Yes, if a rival complains","Only for Chairperson candidates","Para 3 bars rejection on that sole ground.",A11("SEC Order, para 3",137)],
+["How is the information in a candidate's declaration disseminated?","Displayed on the EO's notice board; copies to candidates on demand and to media","Published only in the Gazette","Sent only to the SEC","Given only to political parties","Para 4 prescribes display on the notice board and supply of copies.",A11("SEC Order, para 4",137)],
+["If a rival candidate furnishes contrary information, it is disseminated if supported by:","A declaration attested by two witnesses","A police report","A court order","An affidavit before the Collector","Para 5 requires a declaration duly attested by two witnesses, disseminated with the candidate's own.",A11("SEC Order, para 5",138)],
+["In the self-declaration format, 'Dependent' means:","A person substantially dependent on the candidate's income","Any relative","Only children below 18","Only the spouse","Note 4 under movable assets defines dependent thus.",A11("Annexure to Order – Item (5)A, Note 4",140)],
+["Item (2) of the self-declaration seeks PAN and income tax return details of:","Self, spouse and up to three dependents","Self only","Self and spouse only","Self and all relatives","The table lists Self, Spouse and Dependent 1 to 3.",A11("Annexure to Order – Item (2)",139)],
+["Listed shares/bonds are valued in the declaration at:","Current market value on the Stock Exchange","Purchase price","Face value","Book value","Note 3: market value for listed companies; per books for non-listed.",A11("Annexure to Order – Item (5)A, Note 3",140)],
+["If a candidate fails to file the self-declaration with the nomination, it should be filed latest by:","3:00 PM on the last date of making nominations","5:00 PM on the day of scrutiny","11:00 AM on the day after nominations close","3:00 PM on the day of scrutiny","Note 1 to the declaration gives 3:00 PM on the last date for nominations.",A11("Annexure to Order – Notes",143)],
+["The nomination Checklist (Circular on filing of nominations) is prepared in:","Original and duplicate","Triplicate","Single copy","Original and two duplicates","Original stays with the nomination paper; duplicate goes to the candidate/proposer.",A12("Circular",144)],
+["If the candidate's or proposer's name in the nomination differs from the electoral roll, the EO/AEO should:","Point it out then and there and allow correction of clerical/technical errors","Reject at once","Ignore it","Refer it to the Collector","Para (c) of preliminary examination provides this.",A12("Circular, para (c)",144)],
+["The duplicate Checklist handed to the candidate serves as:","Acknowledgement of documents and notice for submitting missing ones","A receipt for deposit only","A scrutiny notice","An order of rejection","Para (h): no separate notice is needed for items in the checklist.",A12("Circular, para (h)",145)],
+["If a document is filed after the nomination, the EO should:","Issue an acknowledgement stating the date and time of filing","Reject it","Accept without acknowledgement","Return it","Para (i) requires acknowledgement with date and time, also noted in the original checklist.",A12("Circular, para (i)",145)],
+["As per the Checklist Note, all forms, declarations and certificates must be filed before:","3:00 PM on the last date for filing nominations","5:00 PM on the last date","The date of scrutiny","The date of withdrawal","Notes 1 and 2 on the Checklist set the 3:00 PM deadline.",A12("Check List, Notes",146)],
+["The Checklist Note says the security deposit should be paid:","Before or at the time of filing the nomination paper","Within 24 hours after filing","On the day of scrutiny","After acceptance of nomination","Hence there is no question of a notice for the security deposit.",A12("Check List, Note 3",146)]
+];
+
+const ULB={"Srikakulam": ["Ichapuram", "Palasa Kasibugga"], "Vizianagaram": ["Vizianagaram (MC)", "Bobbili", "Nellimarla"], "Parvathipuram Manyam": ["Palakonda", "Parvathipuram", "Salur"], "Visakhapatnam": ["GVMC (MC)"], "Anakapalli": ["Yelamanchali", "Narsipatnam"], "Kakinada": ["Peddapuram", "Tuni", "Yeleswaram", "Samalkot", "Pithapuram", "Gollaprollu"], "Dr. B.R.Ambedkar Konaseema": ["Amalapuram", "Ramachandrapuram", "Mumidivaram"], "East Godavari": ["Kovvur", "Nidadavole", "Mandapeta"], "West Godavari": ["Narsapur", "Akividu"], "Eluru": ["Eluru (MC)", "Nuzivid", "Jangareddygudem"], "Krishna": ["Machilipatnam (MC)", "Pedana", "Vuyyuru"], "NTR": ["Vijayawada (MC)", "Nandigama", "Jaggiahpeta", "Tiruvuru", "Kondapalli"], "Guntur": ["Guntur (MC)", "Tenali"], "Bapatla": ["Repalle", "Chirala"], "Palnadu": ["Gurajala", "Dachepalli", "Piduguralla", "Macherla", "Sattenapalli", "Chilakaluripet", "Vinukonda"], "Prakasam": ["Ongole (MC)", "Addanki", "Chimakurthy", "Darsi"], "Markapurm": ["Markapur", "Giddalur", "Kanigiri"], "SPS Nellore": ["Nellore (MC)", "Buchireddypalem", "Atmakur (N)"], "Tirupati": ["Venkatagiri", "Sullurpet", "Naidupet", "Tirupati (MC)", "Puttur"], "Chittoor": ["Chittoor (MC)", "Palamaneru", "Nagari", "Kuppam"], "Ananthapuram": ["Ananthapuramu (MC)", "Rayadurg", "Kalyandurgam", "Tadipatri", "Guntakal", "Gooty"], "Sri Sathya Sai": ["Dharmavaram", "Penukonda", "Hindupur", "Madakasira", "Kadiri", "Puttaparthi"], "YSR Kadapa": ["Kadapa (MC)", "Proddatur", "Pulivendula", "Jammalamadugu", "Badvel", "Mydukur", "Yerraguntla", "Kamalapuram", "Rajampeta"], "Annamayya": ["Madanapalle", "Rayachoti", "Punganur"], "Nandyal": ["Nandyal", "Allagadda", "Dhone", "Bethamcherla", "Atmakur", "Nandikotkur"], "Kurnool": ["Kurnool (MC)", "Gudur (K)", "Adoni", "Yemmiganur"]};
+const DESIG=["Election officer/Returning Officer","Assistant Election Officer/Assistant Returning officer"];
+const DUR=60*60*1000,N=BANK.length;
+const $=id=>document.getElementById(id),app=$("app");
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+// build questions with deterministic option shuffle
+const QS=BANK.map((b,i)=>{const o=[0,1,2,3],r=rng(i*7919+13);for(let k=3;k>0;k--){const j=Math.floor(r()*(k+1));[o[k],o[j]]=[o[j],o[k]]}
+ return{q:b[0],opts:o.map(x=>b[1+x]),ans:o.indexOf(0),ex:b[5],ref:b[6]}});
+// ---------- storage ----------
+const LS={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+// ---------- Google Sheet upload ----------
+const SHEET_URL="https://script.google.com/macros/s/AKfycbzar1S6buk2FogCqYDIIXiTwvszVxAJk6s2v64m5DQKHzavtzd2Ya2tFQ6wvjCAfGJ8pQ/exec";
+function sheetRow(rec){return{id:rec.id,name:rec.n,district:rec.d,municipality:rec.m,designation:rec.g,wards:rec.wards,
+ attempted:rec.att,correct:rec.c,wrong:rec.w,notAttempted:rec.u,total:N,autoSubmitted:rec.auto?"Yes":"No",
+ started:new Date(rec.start).toLocaleString("en-IN"),submitted:new Date(rec.end).toLocaleString("en-IN"),
+ answers:rec.answers.map((a,i)=>a<0?"-":"ABCD"[a]+(a===QS[i].ans?"✓":"✗")).join(" ")}}
+async function sendOne(row){if(!/^https:\/\/script\.google\.com\//.test(SHEET_URL))return false;
+ try{await fetch(SHEET_URL,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(row)});return true}catch(e){return false}}
+async function flushPending(){const q=LS.get("apq_pending")||[];if(!q.length)return true;const left=[];
+ for(const r of q){if(!(await sendOne(r)))left.push(r)}LS.set("apq_pending",left);return!left.length}
+async function saveResult(rec){const l=LS.get("apq_results")||[];l.push(rec);LS.set("apq_results",l);LS.set("apq_last",rec);
+ const q=LS.get("apq_pending")||[];q.push(sheetRow(rec));LS.set("apq_pending",q);return flushPending()}
+// ---------- state ----------
+let S={view:"home"},T=null,tick=null,showPal=false;
+function stat(rec){let c=0,w=0,u=0;QS.forEach((q,i)=>{const a=rec.answers[i];if(a==null||a<0)u++;else if(a===q.ans)c++;else w++});return{c,w,u,att:c+w}}
+function go(v,x){S={...S,view:v,...x};render()}
+// ---------- views ----------
+function render(){clearInterval(tick);({home,form,quiz,result}[S.view])()}
+function home(){app.innerHTML=`<div class="wrap"><h1>Election Officers' Handbook Quiz</h1><p class="mu">Nominations – Annexures 4 to 12 (Handbook pp. 123–146). ${N} multiple-choice questions · 60 minutes.</p>
+<button class="p big" id="tt">Take Test<div class="mu" style="font-weight:400;color:inherit;opacity:.85">For Election Officers / Assistant Election Officers</div></button>
+<p class="mu">Your score and report card are shown to you after you submit.</p></div>`;
+ $("tt").onclick=()=>{const a=LS.get("apq_attempt");if(a&&Date.now()<a.start+DUR&&!a.done){T=a;go("quiz")}else go("form")}}
+function form(){const f=S.f||{};app.innerHTML=`<div class="wrap"><button id="b">← Back</button><h2>Participant details</h2><div class="card">
+<label>Name</label><input id="n" value="${esc(f.n||"")}" autocomplete="name">
+<label>District</label><select id="d"><option value="">Select district</option>${Object.keys(ULB).map(d=>`<option ${f.d===d?"selected":""}>${esc(d)}</option>`).join("")}</select>
+<label>Municipality</label><select id="m"></select>
+<label>Designation</label><select id="g"><option value="">Select designation</option>${DESIG.map(d=>`<option ${f.g===d?"selected":""}>${esc(d)}</option>`).join("")}</select>
+<label>Wards</label><input id="w" placeholder="e.g. 1, 2, 3 or 1–10" value="${esc(f.w||"")}">
+<div class="err" id="e"></div><button class="p" id="s" style="width:100%">Start 60-minute test</button>
+<p class="mu">The timer starts as soon as you tap Start. The quiz is submitted automatically when time ends.</p></div></div>`;
+ const fm=()=>{const d=$("d").value;$("m").innerHTML=`<option value="">${d?"Select municipality":"Select district first"}</option>`+(ULB[d]||[]).map(m=>`<option ${f.m===m?"selected":""}>${esc(m)}</option>`).join("")};fm();$("d").onchange=()=>{f.m="";fm()};
+ $("b").onclick=()=>go("home");
+ $("s").onclick=()=>{const v={n:$("n").value.trim(),d:$("d").value,m:$("m").value,g:$("g").value,w:$("w").value.trim()};S.f=v;
+  if(!v.n||!v.d||!v.m||!v.g||!v.w){$("e").textContent="Please fill in all the fields.";return}
+  T={id:"r"+Date.now().toString(36)+Math.random().toString(36).slice(2,7),info:v,start:Date.now(),answers:Array(N).fill(-1),marks:Array(N).fill(false),cur:0};LS.set("apq_attempt",T);go("quiz")}}
+function quiz(){
+ const draw=()=>{const q=QS[T.cur],a=T.answers[T.cur];
+ app.innerHTML=`<div class="top"><div><b>Q ${T.cur+1}</b> / ${N}</div><div class="timer" id="tm"></div><button class="p" id="sub">Submit</button></div>
+ <div class="wrap"><div class="layout"><div><div class="card"><div class="mu">${esc(T.info.n)} · ${esc(T.info.m)}</div><h3 style="font-size:1.1rem;margin-top:10px">${T.cur+1}. ${esc(q.q)}</h3>
+ ${q.opts.map((o,i)=>`<button class="opt ${a===i?"sel":""}" data-i="${i}"><b>${"ABCD"[i]}.</b><span>${esc(o)}</span></button>`).join("")}
+ <div class="row" style="margin-top:8px"><button class="bm ${T.marks[T.cur]?"on":""}" id="bk">${T.marks[T.cur]?"★ Bookmarked":"☆ Bookmark for review"}</button><button id="cl" ${a<0?"disabled":""}>Clear answer</button></div></div>
+ <div class="row"><button id="pv" ${T.cur==0?"disabled":""}>← Previous</button><span class="sp"></span><button class="pt" id="pt">Palette</button><span class="sp"></span><button class="p" id="nx" ${T.cur==N-1?"disabled":""}>Next →</button></div>
+ <div class="card pt" id="pm" style="display:${showPal?"block":"none"}">${pal()}</div></div>
+ <div class="card side" style="margin-top:0;align-self:start;position:sticky;top:60px">${palHidden()}</div></div></div>`;
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{T.answers[T.cur]=+b.dataset.i;sv();draw()});
+ $("bk").onclick=()=>{T.marks[T.cur]=!T.marks[T.cur];sv();draw()};$("cl").onclick=()=>{T.answers[T.cur]=-1;sv();draw()};
+ $("pv").onclick=()=>{T.cur--;sv();draw()};$("nx").onclick=()=>{T.cur++;sv();draw()};$("pt").onclick=()=>{showPal=!showPal;draw()};$("sub").onclick=confirmSub;
+ document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{T.cur=+b.dataset.q;showPal=false;sv();draw();scrollTo(0,0)});tickf()};
+ const pal=()=>`<h3>Question palette</h3><div class="pal">${T.answers.map((x,i)=>`<button data-q="${i}" class="${T.marks[i]?"b":x>=0?"a":""} ${i==T.cur?"cur":""}">${i+1}</button>`).join("")}</div><div class="lg"><span><i style="background:var(--ok)"></i>Answered</span><span><i style="background:var(--gr)"></i>Not answered</span><span><i style="background:var(--bl)"></i>Bookmarked</span></div>`;
+ const palHidden=()=>`<div class="sidepal">${pal()}</div>`;
+ const sv=()=>LS.set("apq_attempt",T);
+ const tickf=()=>{const left=T.start+DUR-Date.now(),e=$("tm");if(left<=0){finish(true);return}
+  if(e){const s=Math.floor(left/1000);e.textContent=`⏱ ${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;e.className="timer"+(left<300000?" low":"")}};
+ clearInterval(tick);tick=setInterval(tickf,1000);draw()}
+function confirmSub(){const a=T.answers.filter(x=>x>=0).length,b=T.marks.filter(Boolean).length,m=document.createElement("div");m.className="modal";
+ m.innerHTML=`<div class="card"><h2>Submit the test?</h2><p>Answered: <b>${a}</b> · Not answered: <b>${N-a}</b> · Bookmarked: <b>${b}</b></p><p class="mu">Once submitted, you cannot change your answers.</p><div class="row"><button class="sp" id="no">Go back</button><button class="p sp" id="yes">Yes, submit</button></div></div>`;
+ document.body.appendChild(m);$("no").onclick=()=>m.remove();$("yes").onclick=()=>{m.remove();finish(false)}}
+let busy=false;
+async function finish(auto){if(busy||!T)return;busy=true;clearInterval(tick);document.querySelectorAll(".modal").forEach(x=>x.remove());
+ app.innerHTML=`<div class="wrap"><div class="card">Submitting your answers…</div></div>`;
+ const rec={id:T.id,...T.info,answers:T.answers,start:T.start,end:Date.now(),auto:!!auto,wards:T.info.w};Object.assign(rec,stat(rec));
+ const sent=await saveResult(rec);LS.del("apq_attempt");T=null;busy=false;showPal=false;go("result",{rec,sent})}
+function repHTML(rec){const s=stat(rec),g=[[],[],[]];QS.forEach((q,i)=>{const a=rec.answers[i];g[a==null||a<0?2:a===q.ans?0:1].push(i)});
+ const card=(i,k)=>{const q=QS[i],a=rec.answers[i],t=a>=0?`${"ABCD"[a]}. ${q.opts[a]}`:"Not attempted";
+ return`<div class="card qc ${k}"><div class="mu">Question ${i+1}</div><div><b>${esc(q.q)}</b></div>
+ <p style="margin:8px 0 2px"><span class="tag ${k}">Marked</span> ${esc(t)}</p><p style="margin:2px 0"><span class="tag ok">Correct</span> ${"ABCD"[q.ans]}. ${esc(q.opts[q.ans])}</p>
+ <div class="ex"><b>Explanation:</b> ${esc(q.ex)}<br><span class="mu">📖 ${esc(q.ref)}</span></div></div>`};
+ const sec=(t,k,l)=>`<h2>${t} (${l.length})</h2>${l.length?l.map(i=>card(i,k)).join(""):'<p class="mu">None.</p>'}`;
+ return`<div class="card"><h2>${esc(rec.n)}</h2><div class="mu">${esc(rec.g)}<br>${esc(rec.m)}, ${esc(rec.d)} · Wards: ${esc(rec.wards??rec.w)}<br>Submitted ${new Date(rec.end).toLocaleString()}${rec.auto?" (auto-submitted on time-out)":""}</div>
+ <div class="stats" style="margin-top:12px"><div class="stat"><b>${s.c} / ${N}</b>Score</div><div class="stat"><b>${s.att}</b>Attempted</div><div class="stat"><b style="color:var(--ok)">${s.c}</b>Correct</div><div class="stat"><b style="color:var(--bad)">${s.w}</b>Wrong</div><div class="stat"><b>${s.u}</b>Not attempted</div></div></div>`
+ +sec("✅ Correct answers","ok",g[0])+sec("❌ Incorrect answers","bad",g[1])+sec("⚪ Unattempted","na",g[2])}
+function result(){const{rec,sent}=S;app.innerHTML=`<div class="wrap"><h1>Test submitted</h1>${sent?"":`<div class="card mu">Your result could not be sent right now (no internet?). It is saved on this device and will be sent automatically the next time you open this page while online.</div>`}${repHTML(rec)}<button id="h" class="p">Home</button></div>`;$("h").onclick=()=>go("home");scrollTo(0,0)}
+flushPending();render();
+</script></body></html>
